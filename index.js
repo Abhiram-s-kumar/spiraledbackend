@@ -16,10 +16,17 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+// MongoDB connection
 mongoose.connect("mongodb+srv://abhirambca2021:spiral@cluster0.efympxy.mongodb.net/spiralEd?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch(err => console.error("❌ MongoDB error:", err));
 
+// 🔽 Root route for browser access
+app.get("/", (req, res) => {
+  res.send("🚀 API is running and connected to MongoDB!");
+});
+
+// Contact form endpoint
 app.post("/api/contact", async (req, res) => {
   const { name, number, email } = req.body;
 
@@ -41,3 +48,4 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
+
